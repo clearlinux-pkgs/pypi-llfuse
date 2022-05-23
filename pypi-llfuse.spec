@@ -6,13 +6,15 @@
 #
 Name     : pypi-llfuse
 Version  : 1.4.1
-Release  : 28
+Release  : 29
 URL      : https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz
 Source1  : https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz.asc
 Summary  : Python bindings for the low-level FUSE API
 Group    : Development/Tools
 License  : LGPL-2.0
+Requires: pypi-llfuse-filemap = %{version}-%{release}
+Requires: pypi-llfuse-lib = %{version}-%{release}
 Requires: pypi-llfuse-license = %{version}-%{release}
 Requires: pypi-llfuse-python = %{version}-%{release}
 Requires: pypi-llfuse-python3 = %{version}-%{release}
@@ -25,6 +27,24 @@ BuildRequires : python3-dev
 NOTE: We cannot use sophisticated ReST syntax (like
 e.g. :file:`foo`) here because this isn't rendered correctly
 by PyPi.
+
+%package filemap
+Summary: filemap components for the pypi-llfuse package.
+Group: Default
+
+%description filemap
+filemap components for the pypi-llfuse package.
+
+
+%package lib
+Summary: lib components for the pypi-llfuse package.
+Group: Libraries
+Requires: pypi-llfuse-license = %{version}-%{release}
+Requires: pypi-llfuse-filemap = %{version}-%{release}
+
+%description lib
+lib components for the pypi-llfuse package.
+
 
 %package license
 Summary: license components for the pypi-llfuse package.
@@ -46,6 +66,7 @@ python components for the pypi-llfuse package.
 %package python3
 Summary: python3 components for the pypi-llfuse package.
 Group: Default
+Requires: pypi-llfuse-filemap = %{version}-%{release}
 Requires: python3-core
 Provides: pypi(llfuse)
 
@@ -56,13 +77,16 @@ python3 components for the pypi-llfuse package.
 %prep
 %setup -q -n llfuse-1.4.1
 cd %{_builddir}/llfuse-1.4.1
+pushd ..
+cp -a llfuse-1.4.1 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1649781046
+export SOURCE_DATE_EPOCH=1653341888
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -71,6 +95,15 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+python3 setup.py build
+
+popd
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
@@ -80,9 +113,26 @@ python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+python3 -tt setup.py build install --root=%{buildroot}-v3
+popd
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
+
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-pypi-llfuse
+
+%files lib
+%defattr(-,root,root,-)
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
