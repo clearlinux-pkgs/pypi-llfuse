@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : pypi-llfuse
-Version  : 1.4.1
-Release  : 29
-URL      : https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz
-Source0  : https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz
-Source1  : https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz.asc
+Version  : 1.4.2
+Release  : 30
+URL      : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz
+Source0  : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz
+Source1  : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz.asc
 Summary  : Python bindings for the low-level FUSE API
 Group    : Development/Tools
 License  : LGPL-2.0
@@ -75,10 +75,10 @@ python3 components for the pypi-llfuse package.
 
 
 %prep
-%setup -q -n llfuse-1.4.1
-cd %{_builddir}/llfuse-1.4.1
+%setup -q -n llfuse-1.4.2
+cd %{_builddir}/llfuse-1.4.2
 pushd ..
-cp -a llfuse-1.4.1 buildavx2
+cp -a llfuse-1.4.2 buildavx2
 popd
 
 %build
@@ -86,7 +86,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1653341888
+export SOURCE_DATE_EPOCH=1654095448
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -108,7 +108,7 @@ popd
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pypi-llfuse
-cp %{_builddir}/llfuse-1.4.1/LICENSE %{buildroot}/usr/share/package-licenses/pypi-llfuse/a942fd86faab764d64db3aacfdc7af285c7d15ba
+cp %{_builddir}/llfuse-1.4.2/LICENSE %{buildroot}/usr/share/package-licenses/pypi-llfuse/a942fd86faab764d64db3aacfdc7af285c7d15ba
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
