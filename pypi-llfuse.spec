@@ -6,7 +6,7 @@
 #
 Name     : pypi-llfuse
 Version  : 1.4.2
-Release  : 35
+Release  : 36
 URL      : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz
 Source0  : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz
 Source1  : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz.asc
