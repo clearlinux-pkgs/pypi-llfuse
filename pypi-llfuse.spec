@@ -6,7 +6,7 @@
 #
 Name     : pypi-llfuse
 Version  : 1.4.2
-Release  : 37
+Release  : 38
 URL      : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz
 Source0  : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz
 Source1  : https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz.asc
@@ -21,6 +21,9 @@ Requires: pypi-llfuse-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : pkgconfig(fuse)
 BuildRequires : python3-dev
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 
 %description
 ..
@@ -86,12 +89,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656395410
+export SOURCE_DATE_EPOCH=1672287935
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$FFLAGS -fno-lto "
-export FFLAGS="$FFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -108,7 +111,7 @@ popd
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pypi-llfuse
-cp %{_builddir}/llfuse-1.4.2/LICENSE %{buildroot}/usr/share/package-licenses/pypi-llfuse/a942fd86faab764d64db3aacfdc7af285c7d15ba
+cp %{_builddir}/llfuse-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/pypi-llfuse/a942fd86faab764d64db3aacfdc7af285c7d15ba || :
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
