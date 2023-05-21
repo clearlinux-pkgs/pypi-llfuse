@@ -6,11 +6,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : pypi-llfuse
-Version  : 1.4.3
-Release  : 41
-URL      : https://files.pythonhosted.org/packages/16/33/fa07c4ddfc30fb7e629897d5f79cd8086e5636c599248fe39a6fafd0acbe/llfuse-1.4.3.tar.gz
-Source0  : https://files.pythonhosted.org/packages/16/33/fa07c4ddfc30fb7e629897d5f79cd8086e5636c599248fe39a6fafd0acbe/llfuse-1.4.3.tar.gz
-Source1  : https://files.pythonhosted.org/packages/16/33/fa07c4ddfc30fb7e629897d5f79cd8086e5636c599248fe39a6fafd0acbe/llfuse-1.4.3.tar.gz.asc
+Version  : 1.4.4
+Release  : 42
+URL      : https://files.pythonhosted.org/packages/3e/c3/d74bb2dbfc2eddae86b209f134f8ef655db34c7f5104c1fccd4df5a05da3/llfuse-1.4.4.tar.gz
+Source0  : https://files.pythonhosted.org/packages/3e/c3/d74bb2dbfc2eddae86b209f134f8ef655db34c7f5104c1fccd4df5a05da3/llfuse-1.4.4.tar.gz
+Source1  : https://files.pythonhosted.org/packages/3e/c3/d74bb2dbfc2eddae86b209f134f8ef655db34c7f5104c1fccd4df5a05da3/llfuse-1.4.4.tar.gz.asc
 Summary  : Python bindings for the low-level FUSE API
 Group    : Development/Tools
 License  : LGPL-2.0
@@ -59,10 +59,10 @@ python3 components for the pypi-llfuse package.
 
 
 %prep
-%setup -q -n llfuse-1.4.3
-cd %{_builddir}/llfuse-1.4.3
+%setup -q -n llfuse-1.4.4
+cd %{_builddir}/llfuse-1.4.4
 pushd ..
-cp -a llfuse-1.4.3 buildavx2
+cp -a llfuse-1.4.4 buildavx2
 popd
 
 %build
@@ -70,7 +70,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683645805
+export SOURCE_DATE_EPOCH=1684703677
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
