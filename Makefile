@@ -1,5 +1,5 @@
 PKG_NAME := pypi-llfuse
-URL = https://files.pythonhosted.org/packages/d2/2c/64f01042d1ed08725342c85ddb48a29d2a4f8712d27f22f66f28a67a079c/llfuse-1.5.0.tar.gz
+URL = https://files.pythonhosted.org/packages/be/a5/a3dc8426732f75ff2cdd48aaaa60a44afd56812760f49198c0d204768b1f/llfuse-1.5.1.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
